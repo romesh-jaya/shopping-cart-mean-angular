@@ -1,0 +1,24 @@
+<h4 mat-dialog-title>Enter Qty/Discount for product</h4>
+
+<mat-dialog-content>
+    <mat-form-field style="width:250px !important">
+        <input type="number" matInput placeholder="Enter Qty being purchased" [(ngModel)]="data.qty">
+    </mat-form-field>
+</mat-dialog-content>
+<mat-form-field style="width:250px !important">
+    <input type="number" matInput placeholder="Enter Discount % (if applicable)" [(ngModel)]="data.discount">
+</mat-form-field>
+<mat-form-field>
+    <mat-label>Select price</mat-label>
+    <mat-select [(value)]="data.selectedPrice">
+        <mat-option *ngFor="let price of data.price" [value]="price">
+            {{price.toFixed(2)}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<mat-dialog-actions align="end">
+    <button class="mat-raised-button mat-primary" [mat-dialog-close]="data"
+        style="height: 30px;width: 100px;margin-right: 5px;">OK</button>
+    <button class="mat-raised-button" (click)="dialogRef.close(false)" style="height: 30px;width: 100px">Cancel</button>
+</mat-dialog-actions>

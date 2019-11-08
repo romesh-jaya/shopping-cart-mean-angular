@@ -1,0 +1,36 @@
+<div>
+    <form (ngSubmit)="onAddEditProduct(f)" #f="ngForm">
+        <h5>
+            {{ editMode? "Update" : "Add" }} Product
+        </h5>
+        <ngb-alert [class]="alertClass" [dismissible]="false" style="padding: 3px;height: 25px !important">
+            {{alert}}</ngb-alert>
+        <p>Product Name:</p>
+        <input [(ngModel)]="productName" required name="name" id="name" [disabled]="editMode" class="form-control">
+        <p>Barcode:</p>
+        <input type="number" [(ngModel)]="barcode" name="barcode" id="barcode" class="form-control" pattern="[0-9]*">
+        <div [hidden]="editMode">
+            <p>Unit Price:</p>
+            <input type="number" [(ngModel)]="newPrice" name="newPrice" pattern="[^-]*" #price="ngModel"
+                class="form-control">
+        </div>
+        <hr>
+        <div class="row">
+            <div style="float: left">
+                <button class="btn btn-success" type="submit"
+                    [disabled]="!f.valid || !f.dirty">{{ editMode? "Update" : "Add" }}</button>
+            </div>
+            <div [hidden]="!editMode" style="float: left">
+                <button class="btn btn-primary" type="button" (click)="onAddProduct()">Add Product...</button>
+            </div>
+            <div [hidden]="!editMode" style="float: left">
+                <button class="btn btn-danger" type="button" (click)="onDelete()">Delete</button>
+            </div>
+        </div>
+        <div *ngIf="!price.valid && price.dirty">
+            <hr>
+            <span class="help-block">Please enter a non-negative value for price.</span>
+        </div>
+    </form>
+</div>
+<app-spinner [show]="showSpinner" [text]="'Saving...'"></app-spinner>

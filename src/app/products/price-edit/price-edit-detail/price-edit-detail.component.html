@@ -1,0 +1,39 @@
+<div>
+    <form (ngSubmit)="onUpdate(f)" #f="ngForm">
+        <h5>
+            Update Price
+        </h5>
+        <ngb-alert [class]="alertClass" [dismissible]="false" style="padding: 3px;height: 25px !important">
+            {{alert}}</ngb-alert>
+
+
+        <p *ngIf="!productName">Choose a product to edit price</p>
+        <div *ngIf="productName">
+            <p>{{productName}}</p>
+            <p>Prices registered: </p>
+            <!--rowsDeleted is used as a placeholder to mark that form is dirty-->
+            <input [hidden]="true" ngModel name="rowsDeleted" id="rowsDeleted">
+            <div class="row" *ngFor="let price of updatedPrice; let i = index">
+                <div class="col-4">
+                    <input type="number" [(ngModel)]="price.price" name=" price_{{i}}" pattern="[^-]*"
+                        class="form-control" required>
+                </div>
+                <div class="col-2">
+                    <button type="button" class="btn btn-danger" name="removePrice_{{i}}"
+                        (click)="onRemovePrice(i, f)">X</button>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <button class="btn btn-success" type="submit" [disabled]="!f.valid || !f.dirty">Update</button>
+                <button class="btn btn-primary" type="button" (click)="onNewPrice()">Insert New
+                    Price</button>
+            </div>
+            <div *ngIf="!f.valid && f.dirty">
+                <hr>
+                <span class="help-block">Please enter a non-negative value for price.</span>
+            </div>
+        </div>
+    </form>
+</div>
+<app-spinner [show]="showSpinner" [text]="'Updating...'"></app-spinner>

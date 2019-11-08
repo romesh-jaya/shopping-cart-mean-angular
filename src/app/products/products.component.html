@@ -1,0 +1,13 @@
+<div>
+    <h5>
+        Product List
+    </h5>
+    <ngb-alert [class]="alertClass" [dismissible]="false" style="padding: 3px;height: 25px !important">
+        {{alert}}</ngb-alert>
+    <div *ngIf="products">
+        <app-product *ngFor="let product of products; index as i" [productEl]="product" [index]="i + 1"></app-product>
+    </div>
+    <p *ngIf="products.length == 0 && !showSpinner">No products added to product catalogue. Please add your list of
+        products.</p>
+</div>
+<app-spinner [show]="showSpinner" [text]="'Loading...'"></app-spinner>

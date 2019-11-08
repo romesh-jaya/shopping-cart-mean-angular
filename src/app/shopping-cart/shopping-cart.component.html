@@ -1,0 +1,30 @@
+<div class="mb-component-header">
+    Shopping Cart
+</div>
+<div style="margin-right: 0px; margin-left: 10px;">
+    <div class="row">
+        <div class="col-4">
+            <app-products></app-products>
+        </div>
+        <div class=" col-8">
+
+            <div>
+                <h5>
+                    Shopping Cart Items
+                </h5>
+                <ngb-alert [class]="alertClass" [dismissible]="false" style="padding: 3px;height: 25px !important">
+                    {{alert}}</ngb-alert>
+                <button class="btn btn-primary" (click)="onClearCart()" [disabled]="isClearCartdisabled">Clear
+                    cart</button>
+            </div>
+            <app-shopping-cart-item *ngFor="let cartItem of cartItems; index as i" [cartItem]="cartItem" [index]="i">
+            </app-shopping-cart-item>
+
+        </div>
+    </div>
+    <div>
+        <h5 style="text-align:center; margin-top: 20px">
+            Total Amount: {{ calculateTotal() }}
+        </h5>
+    </div>
+</div>
