@@ -2,10 +2,20 @@
   "name": "shopping-cart",
   "version": "0.0.0",
   "private": true,
-  "dependencies": {    
+  "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.7",
+  },
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "start:server": "nodemon backend/server.js",
+    "heroku-postbuild": "ng build --prod"
   }
 }
