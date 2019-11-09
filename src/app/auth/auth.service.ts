@@ -6,6 +6,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { LoginUser } from './login-user.model';
 import { LoggedInDataService } from './logged-in-data.service';
 import { UtilityService } from '../shared/utility.service';
+import { environment } from 'src/environments/environment';
 
 
 export interface AuthResponseData {
@@ -19,11 +20,12 @@ export class AuthService {
         private cookieService: CookieService,
         private lIDService: LoggedInDataService, private utilityService: UtilityService) { }
 
+    baseURL = environment.nodeEndPoint + "/users";
 
     login(email: string, password: string) {
         return this.http
             .post<AuthResponseData>(
-                'http://localhost:3000/users/login',
+                this.baseURL + '/login',
                 {
                     email: email,
                     password: password,
@@ -40,7 +42,7 @@ export class AuthService {
     signup(email: string, password: string) {
         return this.http
             .post<AuthResponseData>(
-                'http://localhost:3000/users/signup',
+                this.baseURL + '/signup',
                 {
                     email: email,
                     password: password
@@ -57,7 +59,7 @@ export class AuthService {
     changePassword(old_password: string, password: string) {
         return this.http
             .post<AuthResponseData>(
-                'http://localhost:3000/users/change-password',
+                this.baseURL + '/change-password',
                 {
                     old_password: old_password,
                     password: password,
@@ -84,7 +86,7 @@ export class AuthService {
 
         return this.http
             .post<AuthResponseData>(
-                'http://localhost:3000/users/refresh-token',
+                this.baseURL + '/refresh-token',
                 {
                     email: email,
                     refreshToken: refreshToken
@@ -103,7 +105,7 @@ export class AuthService {
 
         this.http
             .post<AuthResponseData>(
-                'http://localhost:3000/users/refresh-token',
+                this.baseURL + '/refresh-token',
                 {
                     email: email,
                     refreshToken: refreshToken
