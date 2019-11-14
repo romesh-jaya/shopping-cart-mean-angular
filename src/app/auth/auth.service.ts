@@ -124,7 +124,6 @@ export class AuthService {
             })
             .catch(error => {
                 console.log("Autologin using refresh token failed: " + this.utilityService.getError(error));
-                this.loginProcessComplete.next(true);
             });
     }
 
@@ -141,7 +140,7 @@ export class AuthService {
         this.lIDService.loginChanged.next();
         //creating a secure cookie.
         var saveData = { ...this.lIDService.loggedInUser, lastLoggedIn: new Date().getTime() };
-        this.cookieService.set('AuthUser', JSON.stringify(saveData), undefined, '/', undefined, undefined, "Strict");
+        this.cookieService.set('AuthUser', JSON.stringify(saveData), 365, '/', undefined, undefined, "Strict");//set expiry for 1 year
         console.log("Saving cookie for future use");
         if (isAdmin) {
             console.log("This user has admin privileges.");
@@ -181,12 +180,12 @@ export class AuthService {
                 let user = new LoginUser(userData.email, userData.token, userData._isAdmin, userData.refreshToken);
                 this.lIDService.loggedInUser = user;
                 this.lIDService.loginChanged.next();
-                this.loginProcessComplete.next(true);
             }
         }
         else {
             console.log("Cookie doesn't exist.");
         }
+        this.loginProcessComplete.next(true);
     }
 
     logout() {
