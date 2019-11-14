@@ -19,11 +19,12 @@
         <hr>
         <div class="row">
             <div style="float: left">
-                <button class="btn btn-success" type="submit"
-                    [disabled]="!f.valid || !f.dirty">{{ editMode? "Update" : "Add" }}</button>
+                <button class="btn btn-success" type="submit" [disabled]="!f.valid || !f.dirty"
+                    style="margin-right: 10px;">{{ editMode? "Update" : "Add" }}</button>
             </div>
             <div [hidden]="!editMode" style="float: left">
-                <button class="btn btn-primary" type="button" (click)="onAddProduct()">Add Product...</button>
+                <button class="btn btn-primary" type="button" (click)="onAddProduct()" style="margin-right: 10px;">Add
+                    Product...</button>
             </div>
             <div [hidden]="!editMode" style="float: left">
                 <button class="btn btn-danger" type="button" (click)="onDelete()">Delete</button>

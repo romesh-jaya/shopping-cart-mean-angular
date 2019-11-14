@@ -37,6 +37,5 @@ p {
 
 .custom-modalbox>mat-dialog-container {
     padding: 0;
-    width: 400px;
-    height: 200px;
+    overflow-y: hidden !important;
 }
