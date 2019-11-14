@@ -6,9 +6,11 @@
         <ngb-alert [class]="alertClass" [dismissible]="false" style="padding: 3px;height: 25px !important">
             {{alert}}</ngb-alert>
         <p>Product Name:</p>
-        <input [(ngModel)]="productName" required name="name" id="name" [disabled]="editMode" class="form-control">
+        <input style="margin-bottom: 10px;" [(ngModel)]="productName" required name="name" id="name"
+            [disabled]="editMode" class="form-control">
         <p>Barcode:</p>
-        <input type="number" [(ngModel)]="barcode" name="barcode" id="barcode" class="form-control" pattern="[0-9]*">
+        <input style="margin-bottom: 10px;" type="number" [(ngModel)]="barcode" name="barcode" id="barcode"
+            class="form-control" pattern="[0-9]*">
         <div [hidden]="editMode">
             <p>Unit Price:</p>
             <input type="number" [(ngModel)]="newPrice" name="newPrice" pattern="[^-]*" #price="ngModel"

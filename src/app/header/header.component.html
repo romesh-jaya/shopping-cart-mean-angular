@@ -42,11 +42,9 @@
                         id="dropdownManual" ngbDropdownAnchor (focus)="myDrop.open()">Logged in as
                         {{loggedInUser}}</button>
                     <div ngbDropdownMenu aria-labelledby="dropdownManual">
-                        <button class="dropdown-item" ngbDropdownItem (click)="onChangePassword() "
-                            style="font-size: 14px!important">Change
+                        <button class="dropdown-item" ngbDropdownItem (click)="onChangePassword() ">Change
                             Password</button>
-                        <button class="dropdown-item" ngbDropdownItem (click)="onLogout()"
-                            style="font-size: 14px!important">Sign out</button>
+                        <button class="dropdown-item" ngbDropdownItem (click)="onLogout()">Sign out</button>
                     </div>
                 </div>
             </nav>

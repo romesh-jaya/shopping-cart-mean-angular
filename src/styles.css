@@ -11,14 +11,18 @@ body {
 
 /* Romesh, adding custom styles*/
 
+/*
+//Note: these didn't seem good for mobile version
 body {
     font-size: 15px;
     line-height: 1;
 }
 
+
 p {
     margin-bottom: .5rem!important;
 }
+*/
 
 .mb-component-header {
     color: #fff;
@@ -26,7 +30,7 @@ p {
     height: 40px;
     padding-left: 15px;
     font-size: 20px;
-    padding-top: 10px;
+    padding-top: 5px;
     width: 100%;
     margin-bottom: 10px;
 }
