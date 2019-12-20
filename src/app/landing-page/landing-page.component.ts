@@ -50,30 +50,33 @@ export class LandingPageComponent implements OnInit {
       authObs = this.authService.signup(email, password);
     }
 
-    //perform login
+    // perform login
     authObs.subscribe(
-      resData => {
+      () => {
         if (this.isLoginMode) {
-          console.log("Logged in. User: " + email);
+          console.log('Logged in. User: ' + email);
         } else {
-          console.log("Logged in after Signup. User: " + email);
+          console.log('Logged in after Signup. User: ' + email);
         }
 
         this.showSpinner = false;
         this.isLoggedIn = true;
         form.reset();
 
-        this.isLoginMode = true; //for next time around
+        this.isLoginMode = true; // for next time around
       },
       error => {
         if (this.isLoginMode) {
-          this.alert = "Error while trying to login : ";
+          this.alert = 'Error while trying to login : ';
         } else {
-          this.alert = "Error while trying to sign up : ";
+          this.alert = 'Error while trying to sign up : ';
         }
 
         this.showSpinner = false;
-        this.dialog.open(ErrorDialog, { data: { message: this.alert + this.utilityService.getError(error) }, panelClass: 'custom-modalbox' });
+        this.dialog.open(ErrorDialog, {
+          data: { message: this.alert + this.utilityService.getError(error) },
+          panelClass: 'custom-modalbox'
+        });
       }
     );
 

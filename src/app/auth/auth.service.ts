@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
-import { Subject } from "rxjs";
+import { Subject } from 'rxjs';
 
 import { CookieService } from 'ngx-cookie-service';
 import { LoginUser } from './login-user.model';
@@ -18,7 +18,7 @@ export interface AuthResponseData {
 
 export class AuthService {
     loginProcessComplete = new Subject<boolean>();
-    baseURL = environment.nodeEndPoint + "/users";
+    baseURL = environment.nodeEndPoint + '/users';
 
     constructor(private http: HttpClient, private router: Router,
         private cookieService: CookieService,
@@ -32,8 +32,8 @@ export class AuthService {
             .post<AuthResponseData>(
                 this.baseURL + '/login',
                 {
-                    email: email,
-                    password: password,
+                    email,
+                    password,
                 }
             )
             .pipe(
@@ -49,8 +49,8 @@ export class AuthService {
             .post<AuthResponseData>(
                 this.baseURL + '/signup',
                 {
-                    email: email,
-                    password: password
+                    email,
+                    password
                 }
             )
             .pipe(
@@ -61,13 +61,13 @@ export class AuthService {
     }
 
 
-    changePassword(old_password: string, password: string) {
+    changePassword(oldPassword: string, password: string) {
         return this.http
             .post<AuthResponseData>(
                 this.baseURL + '/change-password',
                 {
-                    old_password: old_password,
-                    password: password,
+                    oldPassword: oldPassword,
+                    password,
                 }
             )
             .pipe(
@@ -93,13 +93,13 @@ export class AuthService {
             .post<AuthResponseData>(
                 this.baseURL + '/refresh-token',
                 {
-                    email: email,
-                    refreshToken: refreshToken
+                    email,
+                    refreshToken
                 }
             )
             .pipe(
                 tap(resData => {
-                    console.log("Obtained fresh token.");
+                    console.log('Obtained fresh token.');
                     this.handleAuthentication(email, resData.token, resData.isAdmin,
                         refreshToken);
                 })
@@ -112,18 +112,18 @@ export class AuthService {
             .post<AuthResponseData>(
                 this.baseURL + '/refresh-token',
                 {
-                    email: email,
-                    refreshToken: refreshToken
+                    email,
+                    refreshToken
                 }
             )
             .toPromise().then(resData => {
-                console.log("Autologin using cookie.");
-                console.log("Obtained fresh token.");
+                console.log('Autologin using cookie.');
+                console.log('Obtained fresh token.');
                 this.handleAuthentication(email, resData.token, resData.isAdmin,
                     refreshToken);
             })
             .catch(error => {
-                console.log("Autologin using refresh token failed: " + this.utilityService.getError(error));
+                console.log('Autologin using refresh token failed: ' + this.utilityService.getError(error));
             });
     }
 
@@ -133,17 +133,15 @@ export class AuthService {
         isAdmin: boolean,
         refreshToken: string
     ) {
-        let user;
-
-        user = new LoginUser(email, token, isAdmin, refreshToken);
+        const user = new LoginUser(email, token, isAdmin, refreshToken);
         this.lIDService.loggedInUser = user;
         this.lIDService.loginChanged.next();
-        //creating a secure cookie.
-        var saveData = { ...this.lIDService.loggedInUser, lastLoggedIn: new Date().getTime() };
-        this.cookieService.set('AuthUser', JSON.stringify(saveData), 365, '/', undefined, undefined, "Strict");//set expiry for 1 year
-        console.log("Saving cookie for future use");
+        // creating a secure cookie.
+        const saveData = { ...this.lIDService.loggedInUser, lastLoggedIn: new Date().getTime() };
+        this.cookieService.set('AuthUser', JSON.stringify(saveData), 365, '/', undefined, undefined, 'Strict'); // set expiry for 1 year
+        console.log('Saving cookie for future use');
         if (isAdmin) {
-            console.log("This user has admin privileges.");
+            console.log('This user has admin privileges.');
         }
         this.loginProcessComplete.next(true);
     }
@@ -151,11 +149,10 @@ export class AuthService {
 
 
     autoLogin() {
-        var storedCookie;
-        var timeLapsed;
-        var currentDate = new Date();
-        storedCookie = this.cookieService.get('AuthUser');
-        console.log("Reading cookie.");
+        let timeLapsed;
+        const currentDate = new Date();
+        const storedCookie = this.cookieService.get('AuthUser');
+        console.log('Reading cookie.');
         if (storedCookie) {
 
             const userData: {
@@ -169,21 +166,19 @@ export class AuthService {
             if (!userData) {
                 return;
             }
-            console.log("Cookie contained user: " + userData.email + ", isAdmin: " + userData._isAdmin);
+            console.log('Cookie contained user: ' + userData.email + ', isAdmin: ' + userData._isAdmin);
             timeLapsed = currentDate.getTime() - new Date(userData.lastLoggedIn).getTime();
-            if (timeLapsed / (1000 * 60) > 60) {//if the last login was greater than 60 mins
-                //get a fresh token - mostly to check that server connection is still up
+            if (timeLapsed / (1000 * 60) > 60) {// if the last login was greater than 60 mins
+                // get a fresh token - mostly to check that server connection is still up
                 this.refreshTokenOnAutoLogin(userData.email, userData.refreshToken);
-            }
-            else {
-                console.log("Autologin without refresh token");
-                let user = new LoginUser(userData.email, userData.token, userData._isAdmin, userData.refreshToken);
+            } else {
+                console.log('Autologin without refresh token');
+                const user = new LoginUser(userData.email, userData.token, userData._isAdmin, userData.refreshToken);
                 this.lIDService.loggedInUser = user;
                 this.lIDService.loginChanged.next();
             }
-        }
-        else {
-            console.log("Cookie doesn't exist.");
+        } else {
+            console.log('Cookie doesn\'t exist.');
         }
         this.loginProcessComplete.next(true);
     }

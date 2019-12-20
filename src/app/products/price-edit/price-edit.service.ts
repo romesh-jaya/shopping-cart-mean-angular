@@ -1,16 +1,8 @@
-import { OnInit } from "@angular/core";
-import { Subject } from "rxjs";
-import { Product } from "../../shared/product.model";
+import { Subject } from 'rxjs';
+import { Product } from '../../shared/product.model';
 
-export class PriceEditService implements OnInit {
+export class PriceEditService {
     editPrice = new Subject<Product>();
 
-    constructor() {
-
-    }
-
-    ngOnInit() {
-
-    }
 
 }

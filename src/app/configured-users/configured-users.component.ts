@@ -21,7 +21,7 @@ export interface UserData {
 })
 export class ConfiguredUsersComponent implements OnInit {
   alert: string;
-  alertClass: string = "";
+  alertClass = '';
   showSpinner = false;
   displayedColumns: string[] = ['lineNo', 'email', 'isAdmin', 'delete'];
   dataSource;
@@ -54,14 +54,14 @@ export class ConfiguredUsersComponent implements OnInit {
         index++;
       });
       this.dataSource = this.userData;
-      //to clone the object, we use JSON.parse
+      // to clone the object, we use JSON.parse
       this.dataSourceBackup = JSON.parse(JSON.stringify(this.dataSource));
     },
       error => {
         this.showSpinner = false;
         this.dialog.open(ErrorDialog, {
           data: {
-            message: "Error while fetching Users from server: "
+            message: 'Error while fetching Users from server: '
               + this.utilityService.getError(error)
           }, panelClass: 'custom-modalbox'
 
@@ -71,15 +71,15 @@ export class ConfiguredUsersComponent implements OnInit {
 
   onSaveChanges() {
     this.dataSource.forEach(element => {
-      if (element.isAdmin != element.oldIsAdminValue) {
+      if (element.isAdmin !== element.oldIsAdminValue) {
         this.showSpinner = true;
-        console.log("Updating " + element.email + " to " + element.isAdmin);
+        console.log('Updating ' + element.email + ' to ' + element.isAdmin);
         this.cUService.updateAdmin(element.serverId, element.isAdmin).subscribe(() => {
-          this.alert = "Successfully saved changes";
-          this.alertClass = "alert-success";
+          this.alert = 'Successfully saved changes';
+          this.alertClass = 'alert-success';
           setTimeout(() => {
-            this.alert = " ";
-            this.alertClass = "";
+            this.alert = ' ';
+            this.alertClass = '';
           }, 2000
           );
           this.showSpinner = false;
@@ -89,7 +89,7 @@ export class ConfiguredUsersComponent implements OnInit {
             this.showSpinner = false;
             this.dialog.open(ErrorDialog, {
               data: {
-                message: "Error while fetching saving changes: " +
+                message: 'Error while fetching saving changes: ' +
                   this.utilityService.getError(error)
               }, panelClass: 'custom-modalbox'
 
@@ -108,11 +108,11 @@ export class ConfiguredUsersComponent implements OnInit {
   onDeleteClicked(email: string, serverId: string) {
     this.showSpinner = true;
     this.cUService.removeUser(serverId).subscribe(() => {
-      this.alert = "Deleted User " + email;
-      this.alertClass = "alert-success";
+      this.alert = 'Deleted User ' + email;
+      this.alertClass = 'alert-success';
       setTimeout(() => {
-        this.alert = " ";
-        this.alertClass = "";
+        this.alert = ' ';
+        this.alertClass = '';
       }, 2000
       );
       this.showSpinner = false;
@@ -123,7 +123,7 @@ export class ConfiguredUsersComponent implements OnInit {
         this.showSpinner = false;
         this.dialog.open(ErrorDialog, {
           data: {
-            message: "Error while deleting user: " +
+            message: 'Error while deleting user: ' +
               this.utilityService.getError(error)
           }, panelClass: 'custom-modalbox'
 

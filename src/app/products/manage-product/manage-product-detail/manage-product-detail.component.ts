@@ -14,12 +14,12 @@ import { UtilityService } from 'src/app/shared/utility.service';
 })
 export class AddProductDetailComponent implements OnInit {
   @ViewChild('f', { static: false }) aPDForm: NgForm;
-  editMode: boolean = false;
+  editMode = false;
   productEdit: Product;
-  productName = "";
-  newPrice = "";
+  productName = '';
+  newPrice = '';
   alert: string;
-  alertClass: string = "";
+  alertClass = '';
   barcode: number;
   showSpinner = false;
 
@@ -30,22 +30,22 @@ export class AddProductDetailComponent implements OnInit {
     this.aPService.editProduct.subscribe((product) => {
       this.aPDForm.reset();
       this.productName = product.name;
-      this.newPrice = "";
+      this.newPrice = '';
       this.barcode = product.barcode;
       this.productEdit = product;
       this.editMode = true;
-      let firstElement = this.renderer2.selectRootElement('#barcode');
+      const firstElement = this.renderer2.selectRootElement('#barcode');
       firstElement.focus();
     }
     );
   }
 
   customReset() {
-    this.productName = "";
-    this.newPrice = "";
+    this.productName = '';
+    this.newPrice = '';
     this.editMode = false;
     this.aPDForm.reset();
-    let firstElement = this.renderer2.selectRootElement('#name');
+    const firstElement = this.renderer2.selectRootElement('#name');
     firstElement.focus();
   }
 
@@ -54,13 +54,13 @@ export class AddProductDetailComponent implements OnInit {
   }
 
   onDelete() {
-    if (confirm("Are you sure you wish to delete this product?")) {
-      this.pService.removeItem(this.productEdit.serverId).subscribe(data => {
-        this.alert = "Product removed!";
-        this.alertClass = "alert-success";
+    if (confirm('Are you sure you wish to delete this product?')) {
+      this.pService.removeItem(this.productEdit.serverId).subscribe(() => {
+        this.alert = 'Product removed!';
+        this.alertClass = 'alert-success';
         setTimeout(() => {
-          this.alert = " ";
-          this.alertClass = "";
+          this.alert = ' ';
+          this.alertClass = '';
         }, 2000
         );
         this.customReset();
@@ -70,7 +70,7 @@ export class AddProductDetailComponent implements OnInit {
           this.showSpinner = false;
           this.dialog.open(ErrorDialog, {
             data: {
-              message: "Error while removing Product from server: " +
+              message: 'Error while removing Product from server: ' +
                 this.utilityService.getError(error)
             }, panelClass: 'custom-modalbox'
 
@@ -83,28 +83,33 @@ export class AddProductDetailComponent implements OnInit {
   onAddEditProduct(form: NgForm) {
     const value = form.value;
     let newBarcode: number;
-    var newProduct;
+    let newProduct;
 
     if (!this.editMode) {
-      //validations
-      if (value.newPrice === null || value.newPrice == "") {
-        this.dialog.open(ErrorDialog, { data: { message: "Price is required when a new product is entered." }, panelClass: 'custom-modalbox' });
+      // validations
+      if (value.newPrice === null || value.newPrice === '') {
+        this.dialog.open(ErrorDialog, {
+          data: { message: 'Price is required when a new product is entered.' },
+          panelClass: 'custom-modalbox'
+        });
         return;
       }
 
-      //Perform actual adding
-      value.barcode != null ? newBarcode = +value.barcode : null;
+      // Perform actual adding
+      if (value.barcode != null) {
+        newBarcode = +value.barcode;
+      }
 
       newProduct = new Product(value.name, [+value.newPrice], newBarcode);
       this.showSpinner = true;
 
       this.pService.addItem(newProduct).subscribe(
-        responseData => {
-          this.alert = "Product " + value.name + " added successfully!";
-          this.alertClass = "alert-success";
+        () => {
+          this.alert = 'Product ' + value.name + ' added successfully!';
+          this.alertClass = 'alert-success';
           setTimeout(() => {
-            this.alert = " ";
-            this.alertClass = "";
+            this.alert = ' ';
+            this.alertClass = '';
           }, 2000
           );
           this.showSpinner = false;
@@ -113,20 +118,22 @@ export class AddProductDetailComponent implements OnInit {
         },
         error => {
           this.showSpinner = false;
-          this.dialog.open(ErrorDialog, { data: { message: "Error while saving: " + this.utilityService.getError(error) }, panelClass: 'custom-modalbox' });
+          this.dialog.open(ErrorDialog, {
+            data: { message: 'Error while saving: ' + this.utilityService.getError(error) },
+            panelClass: 'custom-modalbox'
+          });
 
         }
-      )
+      );
       this.showSpinner = true;
-    }
-    else {//Product being  edited
+    } else {// Product being  edited
       this.showSpinner = true;
-      this.pService.editBarcode(this.productEdit, +value.barcode).subscribe(retData => {
-        this.alert = "Product " + this.productName + " updated successfully!";
-        this.alertClass = "alert-success";
+      this.pService.editBarcode(this.productEdit, +value.barcode).subscribe(() => {
+        this.alert = 'Product ' + this.productName + ' updated successfully!';
+        this.alertClass = 'alert-success';
         setTimeout(() => {
-          this.alert = " ";
-          this.alertClass = "";
+          this.alert = ' ';
+          this.alertClass = '';
         }, 2000
         );
         this.customReset();
@@ -135,7 +142,10 @@ export class AddProductDetailComponent implements OnInit {
       },
         error => {
           this.showSpinner = false;
-          this.dialog.open(ErrorDialog, { data: { message: "Error while updating Product: " + error.message }, panelClass: 'custom-modalbox' });
+          this.dialog.open(ErrorDialog, {
+            data: { message: 'Error while updating Product: ' + error.message },
+            panelClass: 'custom-modalbox'
+          });
         });
 
 

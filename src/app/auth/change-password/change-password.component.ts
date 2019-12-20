@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
@@ -11,28 +11,25 @@ import { UtilityService } from 'src/app/shared/utility.service';
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.css']
 })
-export class ChangePasswordComponent implements OnInit {
+export class ChangePasswordComponent {
   showSpinner = false;
 
-  constructor(private authService: AuthService, private router: Router, public dialog: MatDialog, private utilityService: UtilityService) { }
-
-  ngOnInit() {
-  }
-
+  constructor(private authService: AuthService, private router: Router,
+    public dialog: MatDialog, private utilityService: UtilityService) { }
 
   onSubmit(form: NgForm) {
     if (!form.valid) {
       return;
     }
-    const old_password = form.value.old_password;
+    const oldPassword = form.value.old_password;
     const password = form.value.password;
 
     this.showSpinner = true;
 
-    this.authService.changePassword(old_password, password).subscribe(
-      resData => {
+    this.authService.changePassword(oldPassword, password).subscribe(
+      () => {
         this.showSpinner = false;
-        alert("password changed successfully!");
+        alert('password changed successfully!');
         form.reset();
         this.router.navigate(['/']);
       },
@@ -40,7 +37,7 @@ export class ChangePasswordComponent implements OnInit {
         this.showSpinner = false;
         this.dialog.open(ErrorDialog, {
           data: {
-            message: "Error while trying to change password : "
+            message: 'Error while trying to change password : '
               + this.utilityService.getError(error)
           }, panelClass: 'custom-modalbox'
 

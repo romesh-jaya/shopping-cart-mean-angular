@@ -1,5 +1,5 @@
-import { LoginUser } from "./login-user.model";
-import { Subject } from "rxjs";
+import { LoginUser } from './login-user.model';
+import { Subject } from 'rxjs';
 
 export class LoggedInDataService {
     loggedInUser: LoginUser = null;

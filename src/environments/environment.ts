@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  nodeEndPoint: "http://localhost:3000",
-  superUser: "admin@ad.com"
+  nodeEndPoint: 'http://localhost:3000',
+  superUser: 'admin@ad.com'
 };
 
 /*

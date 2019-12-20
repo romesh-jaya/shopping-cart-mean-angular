@@ -1,9 +1,9 @@
-import { ShoppingCartItem } from "../shared/shopping-cart-item.model";
-import { Subject } from "rxjs";
+import { ShoppingCartItem } from '../shared/shopping-cart-item.model';
+import { Subject } from 'rxjs';
 
 export class ShoppingCartService {
   cartItems: ShoppingCartItem[] = [];
-  refreshCart = new Subject<{ name: string, price: number }>();
+  refreshCart = new Subject<{ name: string; price: number }>();
   cartItemDeleted = new Subject<number>();
 
   constructor() {
@@ -26,8 +26,8 @@ export class ShoppingCartService {
   }
 
   calculateTotal() {
-    var total = 0;
-    this.cartItems.forEach((item, index, arr) => {
+    let total = 0;
+    this.cartItems.forEach((item) => {
       total += Number(item.price) * Number(item.qty);
     });
     return total.toFixed(2);

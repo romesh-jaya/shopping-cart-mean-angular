@@ -25,7 +25,8 @@ export class PriceOverviewComponent implements OnInit {
   displayedColumns: string[] = ['lineNo', 'product', 'price1', 'price2', 'edit'];
   dataSource;
 
-  constructor(private pService: ProductService, private router: Router, public dialog: MatDialog, private utilityService: UtilityService) { }
+  constructor(private pService: ProductService, private router: Router, public dialog: MatDialog,
+    private utilityService: UtilityService) { }
 
   ngOnInit() {
     this.refreshProducts();
@@ -49,7 +50,7 @@ export class PriceOverviewComponent implements OnInit {
         this.showSpinner = false;
         this.dialog.open(ErrorDialog, {
           data: {
-            message: "Error while fetching Products from server: " +
+            message: 'Error while fetching Products from server: ' +
               this.utilityService.getError(error)
           }, panelClass: 'custom-modalbox'
 

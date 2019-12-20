@@ -12,11 +12,11 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class ShoppingCartComponent implements OnInit, ScCanDeactivate {
   cartItems: ShoppingCartItem[] = [];
-  isClearCartdisabled: boolean = false;
-  alert: string = " ";
-  alertClass: string = "";
+  isClearCartdisabled = false;
+  alert = ' ';
+  alertClass = '';
 
-  constructor(private sCService: ShoppingCartService) { };
+  constructor(private sCService: ShoppingCartService) { }
 
   ngOnInit() {
     this.refreshCart();
@@ -25,7 +25,7 @@ export class ShoppingCartComponent implements OnInit, ScCanDeactivate {
     });
   }
 
-  onEnteredNewPrice(priceData: { name: string, newPrice: number }) {
+  onEnteredNewPrice() {
     this.refreshCart();
   }
 
@@ -59,7 +59,7 @@ export class ShoppingCartComponent implements OnInit, ScCanDeactivate {
     if (confirm('Do you want to discard the changes to the Shopping Cart?')) {
       this.sCService.clearCart();
       return true;
-    };
+    }
     return false;
   }
 

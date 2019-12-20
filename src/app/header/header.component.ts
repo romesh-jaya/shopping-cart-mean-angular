@@ -29,8 +29,7 @@ export class HeaderComponent implements OnInit {
       this.loggedInUser = this.lIDService.loggedInUser.email;
       this.isAdmin = this.lIDService.loggedInUser.isAdmin;
       this.isSuperUser = this.lIDService.loggedInUser.isSuperUser;
-    }
-    else {
+    } else {
       this.isAdmin = false;
       this.isSuperUser = false;
     }

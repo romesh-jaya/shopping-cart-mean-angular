@@ -3,11 +3,11 @@ import { throwError } from 'rxjs';
 import {
     HttpClient,
 } from '@angular/common/http';
-import { Injectable } from "@angular/core";
-import { ConfiguredUser } from "../shared/configured-users.model";
+import { Injectable } from '@angular/core';
+import { ConfiguredUser } from '../shared/configured-users.model';
 import { environment } from '../../environments/environment';
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class ConfiguredUsersService {
     configUsers: ConfiguredUser[] = [];
     baseURL = environment.nodeEndPoint + '/users';
@@ -17,7 +17,7 @@ export class ConfiguredUsersService {
 
     getUsers() {
         return this.http
-            .get<Object[]
+            .get<object[]
             >(
                 this.baseURL
             ).pipe(
@@ -38,8 +38,8 @@ export class ConfiguredUsersService {
     }
 
     updateAdmin(serverId: string, isAdmin: boolean) {
-        let patchData = { isAdmin: isAdmin };
-        var uRL = this.baseURL + "/" + serverId;
+        const patchData = { isAdmin };
+        const uRL = this.baseURL + '/' + serverId;
         return this.http
             .patch(
                 uRL,
@@ -51,7 +51,7 @@ export class ConfiguredUsersService {
     }
 
     removeUser(serverId: string) {
-        var uRL = this.baseURL + "/" + serverId;
+        const uRL = this.baseURL + '/' + serverId;
         return this.http
             .delete(
                 uRL

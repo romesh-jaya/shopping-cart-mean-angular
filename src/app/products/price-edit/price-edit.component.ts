@@ -15,13 +15,14 @@ export class PriceEditComponent implements OnInit {
   productName: string;
   showSpinner = false;
 
-  constructor(private route: ActivatedRoute, private pEService: PriceEditService, private pService: ProductService, public dialog: MatDialog, private utilityService: UtilityService) { }
+  constructor(private route: ActivatedRoute, private pEService: PriceEditService,
+    private pService: ProductService, public dialog: MatDialog, private utilityService: UtilityService) { }
 
   ngOnInit() {
-    this.productName = this.route.snapshot.params['name'];
+    this.productName = this.route.snapshot.params.name;
     this.setDataForEdit();
     this.route.params.subscribe((params: Params) => {
-      this.productName = params['name'];
+      this.productName = params.name;
       this.setDataForEdit();
     });
   }
@@ -37,7 +38,7 @@ export class PriceEditComponent implements OnInit {
 
         let retProduct;
         products.forEach(product => {
-          if (product.name == this.productName) {
+          if (product.name === this.productName) {
             retProduct = product;
           }
         });
@@ -48,7 +49,7 @@ export class PriceEditComponent implements OnInit {
           this.showSpinner = false;
           this.dialog.open(ErrorDialog, {
             data: {
-              message: "Error while fetching Products from server: " +
+              message: 'Error while fetching Products from server: ' +
                 this.utilityService.getError(error)
             }, panelClass: 'custom-modalbox'
 

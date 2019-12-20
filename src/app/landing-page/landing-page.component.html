@@ -16,7 +16,7 @@
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" class="form-control" ngModel name="password" required minlength="6"
-                    validateEqual="confirmPassword" reverse="true" #password="ngModel" />
+                    appValidateEqual="confirmPassword" reverse="true" #password="ngModel" />
                 <div [hidden]="password.valid || (password.pristine && !authForm.submitted)" class="text-danger"
                     *ngIf="!isLoginMode">
                     <small>
@@ -28,7 +28,7 @@
             <div class="form-group" *ngIf="!isLoginMode">
                 <label for="password">Repeat Password</label>
                 <input type="password" id="confirmPassword" class="form-control" ngModel name="confirmPassword" required
-                    minlength="6" validateEqual="password" reverse="false" #confirmPassword="ngModel" />
+                    minlength="6" appValidateEqual="password" reverse="false" #confirmPassword="ngModel" />
                 <small [hidden]="confirmPassword.valid || (confirmPassword.pristine && !authForm.submitted)"
                     class="text-danger">
                     Password mismatch

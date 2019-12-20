@@ -1,24 +1,24 @@
-import { Product } from "../shared/product.model";
+import { Product } from '../shared/product.model';
 import { map, catchError } from 'rxjs/operators';
 import { Subject, throwError } from 'rxjs';
 import {
     HttpClient
 } from '@angular/common/http';
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class ProductService {
     productsRefreshed = new Subject();
-    baseURL = environment.nodeEndPoint + "/products";
+    baseURL = environment.nodeEndPoint + '/products';
     errorOccured = false;
 
     constructor(private http: HttpClient) { }
 
     updatePrice(product: Product, prices: number[]) {
-        let patchData = { ...product };
+        const patchData = { ...product };
         (patchData as any).unitPrice = prices;
-        var uRL = this.baseURL + "/" + product.serverId;
+        const uRL = this.baseURL + '/' + product.serverId;
         return this.http
             .patch(
                 uRL,
@@ -42,9 +42,9 @@ export class ProductService {
 
 
     editBarcode(product: Product, barcode: number) {
-        let patchData = { ...product };
+        const patchData = { ...product };
         (patchData as any).barcode = barcode;
-        var uRL = this.baseURL + "/" + product.serverId;
+        const uRL = this.baseURL + '/' + product.serverId;
         return this.http
             .patch(
                 uRL,
@@ -57,7 +57,7 @@ export class ProductService {
     }
 
     removeItem(serverId: string) {
-        var uRL = this.baseURL + "/" + serverId;
+        const uRL = this.baseURL + '/' + serverId;
         return this.http
             .delete(
                 uRL
@@ -66,7 +66,7 @@ export class ProductService {
 
     getProducts() {
         return this.http
-            .get<Object[]
+            .get<object[]
             >(
                 this.baseURL
             ).pipe(

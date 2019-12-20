@@ -13,7 +13,7 @@ import { UtilityService } from 'src/app/shared/utility.service';
 export class ProductsComponent implements OnInit {
   products: Product[] = [];
   alert: string;
-  alertClass: string = "";
+  alertClass = '';
   showSpinner = false;
 
   constructor(private pService: ProductService, public dialog: MatDialog, private utilityService: UtilityService) { }
@@ -22,7 +22,7 @@ export class ProductsComponent implements OnInit {
     this.refreshProducts();
     this.pService.productsRefreshed.subscribe(() => {
       this.refreshProducts();
-    })
+    });
   }
 
   refreshProducts() {
@@ -35,7 +35,7 @@ export class ProductsComponent implements OnInit {
         this.showSpinner = false;
         this.dialog.open(ErrorDialog, {
           data: {
-            message: "Error while fetching Products from server: " +
+            message: 'Error while fetching Products from server: ' +
               this.utilityService.getError(error)
           }, panelClass: 'custom-modalbox'
 
