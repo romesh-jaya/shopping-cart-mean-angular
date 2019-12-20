@@ -1,6 +1,8 @@
+import { Injectable } from '@angular/core';
 import { ShoppingCartItem } from '../shared/shopping-cart-item.model';
 import { Subject } from 'rxjs';
 
+@Injectable({ providedIn: 'root' })
 export class ShoppingCartService {
   cartItems: ShoppingCartItem[] = [];
   refreshCart = new Subject<{ name: string; price: number }>();

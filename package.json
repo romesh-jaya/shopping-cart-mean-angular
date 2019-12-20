@@ -8,8 +8,7 @@
     "eslint": "eslint src/**/*.ts",
     "e2e": "ng e2e",
     "start": "node server.js",
-    "heroku-postbuild": "ng build --prod",
-    "start:server": "nodemon backend/server.js"
+    "heroku-postbuild": "ng build --prod"
   },
   "private": true,
   "dependencies": {
@@ -33,13 +32,12 @@
     "ngx-cookie-service": "^2.2.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",
-    "tslint": "^5.18.0",
     "typescript": "~3.4.3",
     "typescript-eslint": "0.0.1-alpha.0",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.801.3",
+    "@angular-devkit/build-angular": "^0.803.21",
     "@angular/cli": "~8.1.1",
     "@angular/compiler-cli": "~8.1.1",
     "@angular/language-service": "~8.1.1",

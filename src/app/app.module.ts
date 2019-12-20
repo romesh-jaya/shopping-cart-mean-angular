@@ -37,13 +37,7 @@ import { EqualValidator } from './landing-page/equal-validator.directive';
 import { ConfiguredUsersComponent } from './configured-users/configured-users.component';
 import { NoAccessComponent } from './auth/no-access/no-access.component';
 
-import { ShoppingCartService } from './shopping-cart/shopping-cart.service';
-import { PriceEditService } from './products/price-edit/price-edit.service';
-import { ProductService } from './products/product.service';
-import { AuthService } from './auth/auth.service';
-import { ManageProductService } from './products/manage-product/manage-product.service';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
-import { LoggedInDataService } from './auth/logged-in-data.service';
 import { ChangePasswordComponent } from './auth/change-password/change-password.component';
 
 @NgModule({
@@ -90,15 +84,10 @@ import { ChangePasswordComponent } from './auth/change-password/change-password.
   exports: [
     FormsModule,
   ],
-  providers: [ShoppingCartService,
+  providers: [
     MatDialog,
-    PriceEditService,
-    ProductService,
     ScCanDeactivate,
-    ManageProductService,
-    AuthService,
     CookieService,
-    LoggedInDataService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,

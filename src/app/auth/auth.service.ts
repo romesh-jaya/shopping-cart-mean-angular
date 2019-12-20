@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { tap } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -16,6 +18,7 @@ export interface AuthResponseData {
     refreshToken: string;
 }
 
+@Injectable({ providedIn: 'root' })
 export class AuthService {
     loginProcessComplete = new Subject<boolean>();
     baseURL = environment.nodeEndPoint + '/users';
