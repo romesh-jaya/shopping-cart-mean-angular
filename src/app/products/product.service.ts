@@ -1,15 +1,14 @@
 import { Product } from '../shared/product.model';
 import { map, catchError } from 'rxjs/operators';
-import { Subject, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import {
-    HttpClient
+    HttpClient, HttpParams
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
-    productsRefreshed = new Subject();
     baseURL = environment.nodeEndPoint + '/products';
     errorOccured = false;
 
@@ -22,10 +21,7 @@ export class ProductService {
         return this.http
             .patch(
                 uRL,
-                patchData,
-                {
-                    observe: 'response'
-                }
+                patchData
             );
     }
 
@@ -33,10 +29,7 @@ export class ProductService {
         return this.http
             .post<Product>(
                 this.baseURL,
-                product,
-                {
-                    observe: 'response'
-                }
+                product
             );
     }
 
@@ -48,10 +41,7 @@ export class ProductService {
         return this.http
             .patch(
                 uRL,
-                patchData,
-                {
-                    observe: 'response'
-                }
+                patchData
             );
 
     }
@@ -61,6 +51,24 @@ export class ProductService {
         return this.http
             .delete(
                 uRL
+            );
+    }
+
+    getProduct(name: string) {
+        const uRL = this.baseURL + '/' + name;
+        return this.http
+            .get<any>(
+                uRL
+            ).pipe(
+                map(product => {
+                    return new Product(
+                        (product.product as any).name,
+                        (product.product as any).unitPrice,
+                        (product.product as any).barcode,
+                        (product.product as any)._id
+                    );
+                }
+                )
             );
     }
 
@@ -88,5 +96,42 @@ export class ProductService {
 
     }
 
+    getProductsForQuery(currentPage: number, queryString?: string, queryForNameFlag?: boolean) {
+        let params = new HttpParams();
+        params = params.append('currentPage', currentPage.toString());
+        params = params.append('pagesize', environment.productsPerPage.toString());
 
+        if (queryString) {
+            params = params.append('queryString', queryString);
+        }
+        if (queryForNameFlag) {
+            params = params.append('queryForNameFlag', 'y');
+        }
+
+        return this.http
+            .get<{ results: any[] }>(
+                this.baseURL,
+                { params: params }
+            ).pipe(
+                map(productData => {
+
+                    if (productData.results[0].products.length > 0) {
+                        return {
+                            products: productData.results[0].products.map(product => {
+                                return new Product(
+                                    (product as any).name,
+                                    (product as any).unitPrice,
+                                    (product as any).barcode,
+                                    (product as any)._id
+                                );
+                            }),
+                            rowCount: productData.results[0].totalCount[0].count
+                        };
+                    }
+                    else {
+                        return { products: [], rowCount: 0 };
+                    }
+                })
+            );
+    }
 }

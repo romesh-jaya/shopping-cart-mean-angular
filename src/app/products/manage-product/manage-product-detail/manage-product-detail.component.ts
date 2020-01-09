@@ -27,17 +27,36 @@ export class AddProductDetailComponent implements OnInit {
     private renderer2: Renderer2, public dialog: MatDialog, private utilityService: UtilityService) { }
 
   ngOnInit() {
-    this.aPService.editProduct.subscribe((product) => {
+    this.aPService.editProduct.subscribe((productName) => {
       this.aPDForm.reset();
-      this.productName = product.name;
-      this.newPrice = '';
-      this.barcode = product.barcode;
-      this.productEdit = product;
-      this.editMode = true;
-      const firstElement = this.renderer2.selectRootElement('#barcode');
-      firstElement.focus();
-    }
-    );
+      this.getProduct(productName);
+    });
+  }
+
+  getProduct(name: string) {
+    this.showSpinner = true;
+    this.pService.getProduct(name).subscribe(retProduct => {
+      this.showSpinner = false;
+      this.productEdit = retProduct;
+      if (this.productEdit) {
+        this.productName = retProduct.name;
+        this.newPrice = '';
+        this.barcode = retProduct.barcode;
+        this.editMode = true;
+        const firstElement = this.renderer2.selectRootElement('#barcode');
+        firstElement.focus();
+      }
+    },
+      error => {
+        this.showSpinner = false;
+        this.dialog.open(ErrorDialog, {
+          data: {
+            message: 'Error while fetching Product from server: ' +
+              this.utilityService.getError(error)
+          }, panelClass: 'custom-modalbox'
+
+        });
+      });
   }
 
   customReset() {
@@ -64,7 +83,6 @@ export class AddProductDetailComponent implements OnInit {
         }, 2000
         );
         this.customReset();
-        this.pService.productsRefreshed.next();
       },
         error => {
           this.showSpinner = false;
@@ -114,7 +132,6 @@ export class AddProductDetailComponent implements OnInit {
           );
           this.showSpinner = false;
           this.customReset();
-          this.pService.productsRefreshed.next();
         },
         error => {
           this.showSpinner = false;
@@ -138,7 +155,6 @@ export class AddProductDetailComponent implements OnInit {
         );
         this.customReset();
         this.showSpinner = false;
-        this.pService.productsRefreshed.next();
       },
         error => {
           this.showSpinner = false;

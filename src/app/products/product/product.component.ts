@@ -58,9 +58,9 @@ export class ProductComponent {
       });
 
     } else if (this.route.snapshot['_routerState'].url.includes('price-edit')) {
-      this.pEService.editPrice.next(this.productEl);
+      this.pEService.editPrice.next(this.productEl.name);
     } else if (this.route.snapshot['_routerState'].url.includes('manage-product')) {
-      this.aPService.editProduct.next(this.productEl);
+      this.aPService.editProduct.next(this.productEl.name);
     }
   }
 }

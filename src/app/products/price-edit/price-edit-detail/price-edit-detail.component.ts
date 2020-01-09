@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PriceEditService } from '../price-edit.service';
 import { ProductService } from '../../product.service';
 import { NgForm } from '@angular/forms';
@@ -14,7 +14,6 @@ import { UtilityService } from 'src/app/shared/utility.service';
 })
 export class PriceEditDetailComponent implements OnInit {
   @ViewChild('f', { static: false }) pEForm: NgForm;
-  @Input() productName = '';
   product: Product;
   updatedPrice: { price: number }[] = [];
   alert = ' ';
@@ -25,16 +24,35 @@ export class PriceEditDetailComponent implements OnInit {
     public dialog: MatDialog, private utilityService: UtilityService) { }
 
   ngOnInit() {
-    this.pEService.editPrice.subscribe((product) => {
+    this.pEService.editPrice.subscribe((productName) => {
       this.pEForm.reset();
-      this.productName = product.name;
-      this.product = product;
-      this.updatedPrice = [];
-      product.unitPrice.forEach(price => {
-        this.updatedPrice.push({ price });
+      this.getProduct(productName);
+
+    });
+  }
+
+  getProduct(name: string) {
+    this.showSpinner = true;
+    this.pService.getProduct(name).subscribe(retProduct => {
+      this.showSpinner = false;
+      this.product = retProduct;
+      if (this.product) {
+        this.updatedPrice = [];
+        this.product.unitPrice.forEach(price => {
+          this.updatedPrice.push({ price });
+        });
+      }
+    },
+      error => {
+        this.showSpinner = false;
+        this.dialog.open(ErrorDialog, {
+          data: {
+            message: 'Error while fetching Product from server: ' +
+              this.utilityService.getError(error)
+          }, panelClass: 'custom-modalbox'
+
+        });
       });
-    }
-    );
   }
 
   onUpdate(form: NgForm) {
@@ -63,11 +81,9 @@ export class PriceEditDetailComponent implements OnInit {
         this.alertClass = '';
       }, 2000
       );
-      this.productName = '';
       this.updatedPrice = [];
       this.showSpinner = false;
       form.reset();
-      this.pService.productsRefreshed.next();
     },
       error => {
         this.showSpinner = false;

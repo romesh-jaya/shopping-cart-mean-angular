@@ -34,8 +34,9 @@ export class PriceOverviewComponent implements OnInit {
 
   refreshProducts() {
     this.showSpinner = true;
-    this.pService.getProducts().subscribe(productsFetched => {
-      this.products = productsFetched;
+    this.pService.getProductsForQuery(0).subscribe(results => {
+      this.products = results.products;
+      //this.rowCount = results.rowCount;
       this.showSpinner = false;
 
       let index = 1;

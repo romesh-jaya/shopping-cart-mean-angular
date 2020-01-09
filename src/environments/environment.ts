@@ -5,7 +5,9 @@
 export const environment = {
   production: false,
   nodeEndPoint: 'http://localhost:3000',
-  superUser: 'admin@ad.com'
+  //nodeEndPoint: 'https://romj-node-backend.herokuapp.com',
+  superUser: 'admin@ad.com',
+  productsPerPage: 10
 };
 
 /*

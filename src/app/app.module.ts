@@ -8,8 +8,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
-import { MatSortModule } from '@angular/material/sort';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { CookieService } from 'ngx-cookie-service';
 
@@ -79,7 +81,9 @@ import { ChangePasswordComponent } from './auth/change-password/change-password.
     MatTableModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatSortModule
+    FontAwesomeModule,
+    MatRadioModule,
+    MatPaginatorModule
   ],
   exports: [
     FormsModule,

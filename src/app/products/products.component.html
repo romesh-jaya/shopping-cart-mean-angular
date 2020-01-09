@@ -4,10 +4,30 @@
     </h5>
     <ngb-alert [class]="alertClass" [dismissible]="false" style="padding: 3px;height: 25px !important">
         {{alert}}</ngb-alert>
+    <div class="form-inline md-form form-sm" style="margin-bottom: 20px;">
+        <fa-icon [icon]="faDownload" (click)="onPopulateClicked()" style="margin-right: 3px;"></fa-icon>
+        <fa-icon [icon]="faSearch" (click)="onSearchClicked()"></fa-icon>
+        <input [(ngModel)]="searchString" class="form-control form-control-sm ml-3 w-75" placeholder="Search Product"
+            aria-label="Search" mdbInput (keyup.enter)="onSearchClicked()">
+    </div>
+    <div>
+        <mat-radio-group [(ngModel)]="queryUsing">Query using:
+            <div style="margin-top: 10px;">
+                <mat-radio-button value="1">Barcode</mat-radio-button>
+            </div>
+            <div>
+                <mat-radio-button value="2">Product Name</mat-radio-button>
+            </div>
+        </mat-radio-group>
+    </div>
+    <mat-paginator *ngIf="searchedAtLeastOnce && !showSpinner" [length]="rowCount" [pageSize]="pagesize"
+        [pageIndex]="pageIndex" [showFirstLastButtons]="true" (page)="onChangedPage($event)">
+    </mat-paginator>
+
     <div *ngIf="products">
         <app-product *ngFor="let product of products; index as i" [productEl]="product" [index]="i + 1"></app-product>
     </div>
-    <p *ngIf="products.length == 0 && !showSpinner">No products added to product catalogue. Please add your list of
-        products.</p>
+    <p *ngIf="products.length == 0 && searchedAtLeastOnce && !showSpinner ">No products match your search criteria.</p>
+    <p *ngIf="!searchedAtLeastOnce && !showSpinner ">Please perform a search to populate products.</p>
 </div>
 <app-spinner [show]="showSpinner" [text]="'Loading...'"></app-spinner>
