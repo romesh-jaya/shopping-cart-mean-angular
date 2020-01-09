@@ -9,7 +9,7 @@
 
         <p *ngIf="!product">Choose a product to edit price</p>
         <div *ngIf="product">
-            <p>{{product.productName}}</p>
+            <p>{{product.name}}</p>
             <p>Prices registered: </p>
             <!--rowsDeleted is used as a placeholder to mark that form is dirty-->
             <input [hidden]="true" ngModel name="rowsDeleted" id="rowsDeleted">

@@ -1,6 +1,5 @@
 import { Product } from '../shared/product.model';
-import { map, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
 import {
     HttpClient, HttpParams
 } from '@angular/common/http';
@@ -70,30 +69,6 @@ export class ProductService {
                 }
                 )
             );
-    }
-
-    getProducts() {
-        return this.http
-            .get<object[]
-            >(
-                this.baseURL
-            ).pipe(
-                map(productData => {
-                    return productData.map(product => {
-                        return new Product(
-                            (product as any).name,
-                            (product as any).unitPrice,
-                            (product as any).barcode,
-                            (product as any)._id
-                        );
-                    });
-                }),
-                catchError(errorRes => {
-                    // Send to analytics server
-                    return throwError(errorRes);
-                })
-            );
-
     }
 
     getProductsForQuery(currentPage: number, queryString?: string, queryForNameFlag?: boolean) {
