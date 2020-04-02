@@ -1,5 +1,19 @@
 # ShoppingCart
 
+Tech Stack used: 
+- Angular Unit tests
+- Login/Register/Change password
+- Guards for different user roles
+- Interceptors to resend HTTP request automatically if the 1st one failed
+- Mongo DB
+- Mongoose
+- Express JS
+- Angular dialog
+- Angular Material
+- Querying for products
+
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.1.
 
 ## Development server
